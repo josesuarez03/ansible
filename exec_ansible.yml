@@ -1,5 +1,5 @@
 - name: Ejecutar script con ansible
-  hosts: all
+  hosts: localhost
   become: yes
   tasks:
     - name: Instalar python
