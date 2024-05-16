@@ -1,0 +1,24 @@
+- name: Ejecutar script con ansible
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalar python
+      apt:
+        name: python3
+        state: present
+        update_cache: yes
+
+    - name: Crear entorno virtual de python
+      command: python3 -m venv /opt/venv
+      args:
+        creates: /opt/venv
+
+    - name: Instalar dependencias en el entorno virtual
+      pip:
+        requirements: /app/requirements.txt
+        virtualenv: /opt/venv
+
+    - name: Ejecutar mensaje
+      command: /bin/bash -c "source /opt/venv/bin/activate && python3 /app/ansible.py"
+      args:
+        chdir: /app/
